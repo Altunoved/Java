@@ -1,32 +1,42 @@
-
  /* Name: Eduard Altunov
- *  Date: 9/03/17
- *  Program: Salesperson commision Part II
+ *  Date: 9/11/17
+ *  Program: Salesperson commision Part III
  */
-public class SalesPerson {
 
+public class SalesPerson {
 	private double fixedCompensation;
 	private double variablePercent;
+	private String name;
 
 	public SalesPerson() {
 	}
-
 	public SalesPerson(double fixedCompensation, double variablePercent) {
-		this.fixedCompensation = fixedCompensation;
-		this.variablePercent = variablePercent;
+		this.fixedCompensation=fixedCompensation;
+		this.variablePercent=variablePercent;
 	}
 
-	
+	public SalesPerson(String name,double fixedCompensation, double variablePercent) {
+		this.fixedCompensation = fixedCompensation;
+		this.variablePercent = variablePercent;
+		this.name=name;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public double getFixedCompensation() {
 		return fixedCompensation;
 	}
 
-	
 	public void setFixedCompensation(double fixedCompensation) {
 		this.fixedCompensation = fixedCompensation;
 	}
 
-	
 	public double getVariablePercent() {
 		return variablePercent;
 	}
@@ -38,22 +48,36 @@ public class SalesPerson {
 	public double calculateTotalCompensation(double sales) {
 		double salesTarget = 400000;
 		double salesNeededForIncentive = 0.80 * salesTarget;
-		double commissionRate;
+		double commissionRate = getVariablePercent();
 		double accelerationFactor = 0.25;
-		if (sales > salesNeededForIncentive && sales <= salesTarget) {
-			commissionRate = getVariablePercent();
-                        return getFixedCompensation() + (sales * commissionRate);
-		} else if (sales > salesTarget) {
+		if (sales >= salesNeededForIncentive) {
+		} else if (sales > (salesTarget * 0.8)) {
 			commissionRate = accelerationFactor;
-                        return getFixedCompensation() + (salesTarget * getVariablePercent()) + (sales - salesTarget) * commissionRate;
-
 		} else {
 			commissionRate = 0;
-                        return getFixedCompensation() + (sales * commissionRate);
 
 		}
+		return getFixedCompensation() + (sales * commissionRate);
 	}
+	public double extraSaleNeeded(double compensation)
+	{
+		double sales=compensation-getFixedCompensation();
+		double salesTarget = 400000;
+		double salesNeededForIncentive = 0.80 * salesTarget;
+		double commissionRate = getVariablePercent();
+		double accelerationFactor = 0.25;
+		if (sales >= salesNeededForIncentive) {
+		} else if (sales > (salesTarget * 0.80)) {
+			commissionRate = accelerationFactor;
+		} else {
+			commissionRate = 0;
+
+		}
+		return sales/commissionRate;
+	}
+
 }
+
 /* 
 References:
 
